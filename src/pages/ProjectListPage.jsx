@@ -1,7 +1,22 @@
 import { Link } from "react-router-dom";
 import ProjectCard from "../components/ProjectCard"; // used to render each Project
+import { useEffect, useState } from "react";
+
+//https://project-management-api-4641927fee65.herokuapp.com/projects
+
 
 function ProjectListPage() {
+
+  const [allProjects, setAllProjects] = useState(null);
+
+  useEffect(() => {()
+
+
+
+
+
+
+
   
   return (
     <div className="ProjectListPage">
