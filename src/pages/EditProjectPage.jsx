@@ -1,17 +1,68 @@
+import { use } from "react";
 import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 function EditProjectPage() {
+
+  const navigate = useNavigate();
+
+  const params = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleFormSubmit = (e) => {
+useEffect(() => {
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/projects/${params.projectId}`)
+      .then((response) => {
+        console.log(response);
+        setTitle(response.data.title);
+        setDescription(response.data.description);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+}, []);
+
+
+
+
+
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
     // ...updated logic should be here
+
+    const body = {
+      title: title,
+      description: description,
+    }
+
+    try {
+      
+      await axios.put(`${import.meta.env.VITE_SERVER_URL}/projects/${params.projectId}`, body);
+      navigate (-1);
+
+
+    } catch (error) {
+      console.log(error);
+    }
 
   };
 
   const deleteProject = () => {
     // ...delete logic should be here
+
+    axios.delete(`${import.meta.env.VITE_SERVER_URL}/projects/${params.projectId}`)
+      .then(() => {
+        navigate("/projects");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     
   }; 
 
